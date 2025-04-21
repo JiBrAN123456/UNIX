@@ -144,3 +144,18 @@ SIMPLE_JWT = {
 
 
 AUTH_USER_MODEL = 'tasks.User'
+
+
+
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+}
