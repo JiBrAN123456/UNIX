@@ -1,0 +1,239 @@
+## 🔄 Create Task (fork)
+
+**Request**
+```http
+POST /api/tasks/
+Content-Type: application/json
+
+{
+  "name": "compile-report"
+}
+```
+
+**Response**
+```json
+{
+  "id": 1,
+  "name": "compile-report",
+  "status": "pending",
+  "created_at": "2025-04-22T10:00:00Z"
+}
+```
+
+---
+
+## 📋 List All Tasks (ls)
+
+**Request**
+```http
+GET /api/tasks/
+```
+
+**Response**
+```json
+[
+  {
+    "id": 1,
+    "name": "compile-report",
+    "status": "pending",
+    "created_at": "2025-04-22T10:00:00Z"
+  },
+  {
+    "id": 2,
+    "name": "email-summary",
+    "status": "completed",
+    "created_at": "2025-04-22T10:05:00Z"
+  }
+]
+```
+
+**Filter by status:**
+```http
+GET /api/tasks/?status=pending
+```
+
+---
+
+## ▶️ Simulate Task Execution (run)
+
+**Request**
+```http
+POST /api/tasks/1/run/
+```
+
+**Response**
+```json
+{
+  "message": "Task 'compile-report' is now running and will complete shortly."
+}
+```
+
+---
+
+## ❌ Delete Task (rm)
+
+**Request**
+```http
+DELETE /api/tasks/2/
+```
+
+**Response**
+```json
+{
+  "message": "Task deleted successfully."
+}
+```
+
+---
+
+## 🔐 JWT Authentication Flow (Optional)
+
+**Obtain Token**
+```http
+POST /api/token/
+Content-Type: application/json
+
+{
+  "username": "johndoe",
+  "password": "securepassword"
+}
+```
+
+**Response**
+```json
+{
+  "access": "eyJ0eXAiOiJKV1QiLCJhbGci...",
+  "refresh": "eyJ0eXAiOiJKV1QiLCJhbGci..."
+}
+```
+
+**Use token in subsequent requests:**
+```http
+Authorization: Bearer <access_token>
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+🧪 Postman Usage Examples
+🔐 Authentication (Optional)
+If JWT authentication is enabled:
+
+Request:
+
+bash
+Copy
+Edit
+POST /api/token/
+Body (JSON):
+
+json
+Copy
+Edit
+{
+  "username": "yourusername",
+  "password": "yourpassword"
+}
+Response:
+
+json
+Copy
+Edit
+{
+  "access": "<your-access-token>",
+  "refresh": "<your-refresh-token>"
+}
+🔑 Add the access token to your Postman headers:
+
+makefile
+Copy
+Edit
+Key: Authorization
+Value: Bearer <your-access-token>
+📋 List Tasks (ls)
+Method: GET
+Endpoint: /api/tasks/
+Headers (if auth):
+
+pgsql
+Copy
+Edit
+Authorization: Bearer <your-access-token>
+Response Example:
+
+json
+Copy
+Edit
+[
+  {
+    "id": 1,
+    "name": "example task",
+    "state": "completed",
+    "created_at": "2025-04-21T12:34:56Z"
+  },
+  {
+    "id": 2,
+    "name": "build something cool",
+    "state": "pending",
+    "created_at": "2025-04-22T09:10:11Z"
+  }
+]
+➕ Create Task (fork)
+Method: POST
+Endpoint: /api/tasks/
+Body (JSON):
+
+json
+Copy
+Edit
+{
+  "name": "build something cool"
+}
+Response:
+
+json
+Copy
+Edit
+{
+  "id": 2,
+  "name": "build something cool",
+  "state": "pending",
+  "created_at": "2025-04-22T09:10:11Z"
+}
+🚀 Run/Complete a Task (run)
+Method: PATCH
+Endpoint: /api/tasks/<task_id>/run/
+Example: /api/tasks/2/run/
+
+Response:
+
+json
+Copy
+Edit
+{
+  "id": 2,
+  "name": "build something cool",
+  "state": "completed",
+  "created_at": "2025-04-22T09:10:11Z"
+}
+❌ Delete a Task (rm)
+Method: DELETE
+Endpoint: /api/tasks/<task_id>/
+Example: /api/tasks/2/
+
+Response:
+
+css
+Copy
+Edit
+204 No Content
